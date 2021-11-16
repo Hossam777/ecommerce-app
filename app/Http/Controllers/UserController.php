@@ -91,6 +91,7 @@ class UserController extends Controller
             'products.*.price' => 'required|numeric',
             'products.*.size' => 'required',
             'products.*.color' => 'required',
+            'products.*.quantity' => 'required',
         ]);
         if ($validation->passes()) {
             $order = [
@@ -110,7 +111,8 @@ class UserController extends Controller
                     'productimg' => $product['productid'],
                     'price' => $product['price'],
                     'size' => $product['size'],
-                    'color' => $product['color']
+                    'color' => $product['color'],
+                    'quantity' => $product['quantity']
                 ]; 
                 OrderItem::create(
                     $orderItem
