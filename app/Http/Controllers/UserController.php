@@ -32,8 +32,10 @@ class UserController extends Controller
         $credentials = $request->validate([
             'username' => ['required'],
             'email' => ['required', 'email'],
+            'phone' => ['required'],
             'password' => ['required'],
         ]);
+        $credentials["password"] = bcrypt($credentials["password"]);
         $user = User::create(
             $credentials
         );
@@ -51,10 +53,10 @@ class UserController extends Controller
             'password' => ['required'],
         ]);
         if (!auth()->attempt($credentials)) {
-            return response()->json(["code" => $this->badRequestCode, "message" => "login failed"], $this->badRequestCode);
+            return response()->json(["code" => $this->badRequestCode, "message" => "wrong credentials"], $this->badRequestCode);
         }
         $accessToken = auth()->user()->createToken('authToken')->accessToken;
-        return response()->json(["code" => $this->okCode, "message" => "login sucessfully", "token" => $accessToken, "user" => $user], $this->okCode);
+        return response()->json(["code" => $this->okCode, "message" => "login sucessfully", "token" => $accessToken, "user" => auth()->user()], $this->okCode);
     }
 
     public function CheckToken(){
@@ -84,6 +86,8 @@ class UserController extends Controller
             'address' => 'required',
             'totalprice' => 'required|numeric',
             'products.*.productid' => 'required|integer',
+            'products.*.productname' => 'required',
+            'products.*.productimg' => 'required',
             'products.*.price' => 'required|numeric',
             'products.*.size' => 'required',
             'products.*.color' => 'required',
@@ -102,6 +106,8 @@ class UserController extends Controller
                 $orderItem = [
                     'orderid' => $order->id,
                     'productid' => $product['productid'],
+                    'productname' => $product['productname'],
+                    'productimg' => $product['productid'],
                     'price' => $product['price'],
                     'size' => $product['size'],
                     'color' => $product['color']
