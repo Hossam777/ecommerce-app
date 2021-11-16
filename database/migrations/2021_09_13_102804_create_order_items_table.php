@@ -22,6 +22,7 @@ class CreateOrderItemsTable extends Migration
             $table->double('price');
             $table->string('size', 30);
             $table->string('color', 30);
+            $table->Integer('quantity');
             $table->timestamps();
         });
     }
