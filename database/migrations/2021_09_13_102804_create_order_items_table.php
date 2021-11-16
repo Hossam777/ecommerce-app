@@ -17,6 +17,8 @@ class CreateOrderItemsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('orderid');
             $table->bigInteger('productid');
+            $table->string('productname');
+            $table->string('productimg');
             $table->double('price');
             $table->string('size', 30);
             $table->string('color', 30);
