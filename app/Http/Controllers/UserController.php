@@ -108,7 +108,7 @@ class UserController extends Controller
                     'orderid' => $order->id,
                     'productid' => $product['productid'],
                     'productname' => $product['productname'],
-                    'productimg' => $product['productid'],
+                    'productimg' => $product['productimg'],
                     'price' => $product['price'],
                     'size' => $product['size'],
                     'color' => $product['color'],
